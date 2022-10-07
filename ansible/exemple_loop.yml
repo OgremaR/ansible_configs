@@ -1,0 +1,34 @@
+---
+- name: Loops Playbook
+  hosts: ansible
+  become: yes
+
+
+  tasks:
+  - name: Say Hello to All
+    debug: msg="Hello {{ item }}"
+    loop:
+      - "Vasya"
+      - "Petya"
+      - "Masha"
+      - "Olya"
+
+  - name: Loop Until example
+    shell: echo -n Z >> myfile.txt && cat myfile.txt
+    register: output
+    delay: 2
+    retries: 10
+    until: output.stdout.find("ZZZZ") == false
+
+
+  - name: Print Final Output
+    debug:
+      var: output.stdout
+
+
+#  - name: 
+#    apt: name={{ item }} state=latest
+#    whith_items: # whith_items\loop
+#           - python
+#           - tree
+#           - mysql-client

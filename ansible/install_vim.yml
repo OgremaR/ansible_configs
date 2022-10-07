@@ -1,0 +1,8 @@
+---
+- name: Install vim
+  hosts: linux_servers_jamartemjanov, linux_servers
+  become: yes
+
+  tasks:
+  - name: Install Vim
+    apt: name=vim state=latest

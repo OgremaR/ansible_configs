@@ -1,0 +1,57 @@
+# Thidds is the default ansible 'hosts' file.
+#
+# It should live in /etc/ansible/hosts
+#
+#   - Comments begin with the '#' character
+#   - Blank lines are ignored
+#   - Groups of hosts are delimited by [header] elements
+#   - You can enter hostnames or ip addresses
+#   - A hostname/ip can be a member of multiple groups
+
+# Exemples:
+
+#[linux_servers]
+#Ansible  ansible_host=172.172.181.140 ansible_user=isidorov ansible_ssh_pass=Collision! ansible_sudo_pass=Collision!  ansible_port=22
+
+#[windows]
+#172.172.172.16
+
+#[windows:vars]
+#ansible_user=admin
+#ansible_password=473718473718
+#ansible_port=5985
+#ansible_connection=winrm
+#ansible_winrm_server_cert_validation=ignore
+
+[linux_servers]
+Ansible  ansible_host=172.172.181.140
+
+[linux_servers_jamartemjanov]
+Zabbix  ansible_host=172.172.172.100
+Data_Store  ansible_host=172.172.177.247
+#1  ansible_host=172.172.177.245
+#2  ansible_host=172.172.180.246
+3  ansible_host=172.172.192.71
+4  ansible_host=172.172.177.246
+5  ansible_host=172.172.177.248
+6  ansible_host=172.172.175.242
+#7  ansible_host=172.172.177.234
+8  ansible_host=172.172.184.247
+9  ansible_host=172.172.173.243
+#10  ansible_host=172.172.177.236
+11  ansible_host=172.172.180.75
+12  ansible_host=172.172.184.45
+13  ansible_host=172.172.180.249
+14  ansible_host=172.172.181.157
+15  ansible_host=172.172.180.241
+16  ansible_host=172.172.180.143
+17  ansible_host=172.172.184.249
+#18  ansible_host=172.172.172.228
+19  ansible_host=172.172.180.238
+20  ansible_host=172.172.180.11
+21  ansible_host=172.172.181.155
+22  ansible_host=192.168.0.24
+23  ansible_host=172.172.175.248
+
+[windows]
+172.172.172.16

@@ -1,0 +1,5 @@
+---
+ansible_user      : jamartemjanov
+ansible_ssh_pass  : 'me to you'
+ansible_sudo_pass : 'me to you'
+ansible_port      : 22

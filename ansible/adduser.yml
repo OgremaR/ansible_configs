@@ -1,0 +1,18 @@
+---
+- name: add users
+  hosts: linux_servers_jamartemjanov
+  become: yes
+
+  vars:
+    u_name: vpluzhnikov
+    u_pass: Mozilla993
+   
+  tasks:
+    - name: Create user
+      user:
+         name: "{{ u_name }}"
+         groups: sudo
+         shell: /bin/bash
+         password: "{{ u_pass | password_hash('sha512') }}"
+         update_password: always
+#      register: "{{ u_name }}"

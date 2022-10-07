@@ -1,0 +1,5 @@
+---
+ansible_user      : isidorov
+ansible_ssh_pass  : Collision!
+ansible_sudo_pass : Collision!
+ansible_port      : 22

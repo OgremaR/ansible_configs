@@ -1,0 +1,9 @@
+---
+- name: Test Connection to my servers
+  hosts: linux_servers_jamartemjanov, linux_servers 
+  become: yes
+
+  tasks:
+
+  - name: Ping my servers
+    ping:

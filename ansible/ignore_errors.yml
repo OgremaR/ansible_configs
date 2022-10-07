@@ -1,0 +1,24 @@
+---
+- name: ignore_errors
+  hosts: linux_servers
+  any_errors_fatal: true                       # любая ошибка фатальна
+  become: yes
+  
+
+  tasks:
+  - name: Task Number1
+    apt: name=treeeeeee state=latest
+    ignore_errors: yes                          # если будет ошибка, продолжить дальше
+
+  - name: Task Number2
+    shell: echo Hello World!
+    register: results                           # дополнительная информация о выполнении или ошибке
+#    failed_when: "'World' in results.stdout"   # делать ошибку(failed), когда слово 'World' есть в результате вывода
+#    failed_when: results.rc == 0               # делать ошибку, когда код успешно выполняется
+      
+  - debug:
+      var: results
+
+
+  - name: Task Number3
+    shell: echo Privet Mir!!!

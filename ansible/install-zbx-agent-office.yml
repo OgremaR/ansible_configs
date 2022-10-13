@@ -1,0 +1,82 @@
+---
+- name: install-zbx-agent
+#hosts: all
+  become: true
+  become_user: root
+  gather_facts: true
+  tasks:
+    - name: "Create apt.conf"
+      blockinfile:
+        path: /etc/apt/apt.conf
+        block: |
+         Acquire::http::Proxy "http://172.172.174.5:3128";
+         Acquire::::Proxy "true";
+      backup: yes
+    - name: Update and upgrade apt packages
+      become: true
+      apt:
+      upgrade: yes
+      update_cache: yes
+      cache_valid_time: 86400 #One day
+    - name: "Install zabbix-agent"
+      package:
+        name: zabbix-agent
+        state: lates
+    - name: "Copy zabbix_agentd.conf"
+      copy:
+          src: ansible/zabbix_agentd.conf
+          dest: /etc/zabbix/zabbix_agentd.conf
+    - name: "Install smartmontools"
+      package:
+          name: smartmontools
+          state: lates
+    - name: "Copy sudoers file"
+      copy:
+          src: zabbix/zbx-smartctl/sudoers_zabbix_smartctl
+          dest: /etc/sudoers.d/sudoers_zabbix_smartctl
+          validate: "visudo -cf %s"
+          mode: 0440
+    - name: "Copy agent config"
+      copy:
+          src: zabbix/zbx-smartctl/zabbix_smartctl.conf
+          dest: /etc/zabbix/zabbix_agentd.d/zabbix_smartctl.conf
+    - name: "Create scripts directory"
+      file:
+          path: /etc/zabbix/scripts
+          state: directory
+    - name: "Copy script"
+      copy:
+          src: zabbix/zbx-smartctl/discovery-scripts/nix/smartctl-disks-discovery.pl
+          dest: /etc/zabbix/scripts/smartctl-disks-discovery.pl
+          owner: zabbix
+          group: zabbix
+    - name: "Ensure script is executable"
+      file:
+          dest: /etc/zabbix/scripts/smartctl-disks-discovery.pl
+          mode: a+x
+#zbx-mdraid
+    - name: "Configure MDmonitoring"
+    - copy:
+          src: zabbix/zbx-mdraid/userparametr_md.conf
+          dest: /etc/zabbix/zabbix_agentd.d/userparameter_md.conf
+          owner: root
+          group: zabbix
+#auto shutdown
+    - name: "Install shutdown.sh"
+    - copy:
+          src: /zabbix/apcupsd/shutdown.sh
+          dest: /etc/zabbix/scripts
+          owner: zabbix
+          group: zabbix
+          mode: a+x
+#Modify sudoers
+    - name: "Modify sudoers"
+    - lineinfile:
+          path: /etc/sudoers
+          state: present
+          line: 'zabbix ALL=(ALL:ALL) NOPASSWD: /etc/zabbix/scrits/shutdown.sh'
+          validate: '/usr/sbin/visudo -cf %s'
+    - name: "Restart zabbix-agent via systemd"
+      service:
+        name: zabbix-agent
+        state: restarted

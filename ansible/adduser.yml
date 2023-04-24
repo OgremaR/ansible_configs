@@ -1,11 +1,11 @@
 ---
 - name: add users
-  hosts: linux_servers_jamartemjanov
+  hosts: linux_servers_exemple
   become: yes
 
   vars:
-    u_name: vpluzhnikov
-    u_pass: Mozilla993
+    u_name: username
+    u_pass: AnyPassword!@#$
    
   tasks:
     - name: Create user

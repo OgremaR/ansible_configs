@@ -9,7 +9,7 @@
   blockinfile:
   path: /etc/apt/apt.conf
   block: |
-         Acquire::http::Proxy "http://172.172.180.7:3128";
+         Acquire::http::Proxy "http://172.xxx.xxx.xxx:3128";
          Acquire::::Proxy "true";
   backup: yes
 - name: Update and upgrade apt packages

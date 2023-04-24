@@ -1,6 +1,6 @@
 ---
 - name: Test Connection to my servers
-  hosts: linux_servers_jamartemjanov, linux_servers 
+  hosts: linux_servers_exemple, linux_servers 
   become: yes
 
   tasks:
